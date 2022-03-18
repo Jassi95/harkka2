@@ -1,3 +1,4 @@
+#Juho Jääskeläinen 6.3.2022
 from xmlrpc.server import SimpleXMLRPCServer
 import os
 import xml.etree.ElementTree as ET
@@ -29,15 +30,13 @@ class ApiClass:
                     i+=1
                 #print(data)
                 return data
-
-
         return data
 
     def PUT_note(self,topic,title,text):#TODO try except
         tree=ET.parse('db.xml')
         root=tree.getroot()
-        #Parses the input to xml tree
         try:
+            #Parses the input to xml tree
             topicXML =f"""<topic name="{topic}">
             <note name="{title}">
                 <text>

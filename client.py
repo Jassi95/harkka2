@@ -16,11 +16,6 @@ SMALL_FONT = ("Helvetica", 13)
 BG_BLUE='#4472C4'
 BT_GREEN='#70AD47'
 
-class add_note_GUI:#Handles the inputs
-    def __init__(self,master):
-        return 0
-
-
 class GUI: ##Handles the GUI
     ip_address=None
     client=None
@@ -68,11 +63,11 @@ class GUI: ##Handles the GUI
         self.text_box.pack(fill='both',expand=True)
         self.text_box.configure(state=tk.DISABLED)
         self.frame.pack()
-        self.title_frame.grid_remove()
+        self.title_frame.grid_remove()#hides the title frame
 
     def show_results(self,notebook):
         #Shows the results from the server in text_box with some styling so that note title is bolded and bigger
-        self.text_box.configure(state=tk.NORMAL)#Cleans the text boc
+        self.text_box.configure(state=tk.NORMAL)#Cleans the text box
         self.topic_textbox.delete(0, tk.END)
         self.text_box.delete("1.0","end")
         if notebook!='Not found':
@@ -88,8 +83,8 @@ class GUI: ##Handles the GUI
                     self.text_box.insert(tk.END, '\n'+timestampString+'\n')
                     self.text_box.insert(tk.END, text+'\n\n')
 
-        else:#shows tittle not found
-            self.text_box.insert(tk.END,notebook+' press add button to create new topic')
+        else:#Server should always return something, but just in case.
+            self.text_box.insert(tk.END,notebook+' Something went wrong')
 
         self.text_box.configure(state=tk.DISABLED)
 
@@ -98,15 +93,15 @@ class GUI: ##Handles the GUI
     def search(self):
         #Handles search request to the server
         self.button_add.config(state=tk.NORMAL)
-        self.title_frame.grid_remove()
         print('searching database')
-        if self.topic_textbox.get()!='':
+        if self.topic_textbox.get()!='':#Default behavior is that if the topic is empty nothing happens
             note = API_methods.get_note(self.topic_textbox.get())
             self.show_results(note)
 
 
+
     def add(self):
-        #Handles button functionality
+        #Disable add button and open new window
         self.button_add.config(state=tk.DISABLED)
         self.write_note()
         print('Switching to adding mode')
@@ -139,7 +134,7 @@ class GUI: ##Handles the GUI
                 self.enable_add_button()
                 top.destroy()
 
-        def submit_check(topic,title,text):#submits the new note.
+        def submit_check(topic,title,text):#Handless the submission to server
             if topic.strip()=='' or title.strip()=='' or text.strip() == '':
                 messagebox.showerror('Error','Topic, title or text is empty')
             else:
@@ -190,11 +185,7 @@ class GUI: ##Handles the GUI
         text_box.pack(fill='both',expand=True)
         writeFrame.pack()
 
-
-
-
-
-class API_methods:#TO handle server communications
+class API_methods:#Offers methods to handle server communications
     @staticmethod
     def get_note(topic):
         #print(f'{topic}')
