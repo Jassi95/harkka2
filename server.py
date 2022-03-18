@@ -103,11 +103,6 @@ class ApiClass:
             return 'Not found in wikipedia'
 
         #print(DATA[3][0])
-    def _wikiText(self,link):#TODO option to look for data on wikipedia
-
-        return text
-
-
 
 #Register functions to the server
 server.register_instance(ApiClass())
