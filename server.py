@@ -5,10 +5,8 @@ import datetime
 import requests
 #Define server and create it
 server = SimpleXMLRPCServer(('localhost', 3000),logRequests=True)
-#Opens the db
 
-#Define functions of the server
-
+#Define functions of the server that can be accessed.
 class ApiClass:
 
     def GET_note(self,topic):#TODO try except
